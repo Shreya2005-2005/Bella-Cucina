@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+  <div class="admin-container">
+    <%- include('partials/sidebar') %>
+    <main class="admin-main">
+      <h1>Dashboard</h1>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Menu Items</h3>
+          <p class="stat-number"><%= menu.length %></p>
+        </div>
+        <div class="stat-card">
+          <h3>Pending Reservations</h3>
+          <p class="stat-number"><%= reservations.length %></p>
+        </div>
+        <div class="stat-card">
+          <h3>Contact Messages</h3>
+          <p class="stat-number"><%= contacts.length %></p>
+        </div>
+      </div>
+
+      <div class="recent-section">
+        <h2>Recent Reservations</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Guests</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% reservations.slice(-5).reverse().forEach(res => { %>
+              <tr>
+                <td><%= res.name %></td>
+                <td><%= res.email %></td>
+                <td><%= res.date %></td>
+                <td><%= res.time %></td>
+                <td><%= res.guests %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="recent-section">
+        <h2>Recent Messages</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% contacts.slice(-5).reverse().forEach(contact => { %>
+              <tr>
+                <td><%= contact.name %></td>
+                <td><%= contact.email %></td>
+                <td><%= contact.message.substring(0, 50) %>...</td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

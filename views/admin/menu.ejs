@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Manager</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+  <div class="admin-container">
+    <%- include('partials/sidebar') %>
+    <main class="admin-main">
+      <h1>Menu Manager</h1>
+      
+      <div class="add-form">
+        <h2>Add New Menu Item</h2>
+        <form method="POST" action="/admin/menu" enctype="multipart/form-data">
+          <input type="text" name="name" placeholder="Dish Name" required>
+          <input type="text" name="category" placeholder="Category (e.g., Mains, Desserts)" required>
+          <input type="number" name="price" placeholder="Price" step="0.01" required>
+          <textarea name="description" placeholder="Description" required></textarea>
+          <input type="file" name="image" accept="image/*">
+          <label><input type="checkbox" name="featured"> Featured Dish</label>
+          <button type="submit" class="btn-primary">Add Item</button>
+        </form>
+      </div>
+
+      <div class="menu-list">
+        <h2>Current Menu Items</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Featured</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% menu.forEach(item => { %>
+              <tr>
+                <td><img src="<%= item.image %>" alt="<%= item.name %>" style="width:50px;height:50px;object-fit:cover;"></td>
+                <td><%= item.name %></td>
+                <td><%= item.category %></td>
+                <td>$<%= item.price %></td>
+                <td><%= item.featured ? '✓' : '' %></td>
+                <td>
+                  <button onclick="deleteItem(<%= item.id %>)" class="btn-danger">Delete</button>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+  <script>
+    function deleteItem(id) {
+      if (confirm('Delete this item?')) {
+        fetch(`/admin/menu/delete/${id}`, { method: 'POST' })
+          .then(() => location.reload());
+      }
+    }
+  </script>
+</body>
+</html>

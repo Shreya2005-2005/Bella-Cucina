@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Posts</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+  <div class="admin-container">
+    <%- include('partials/sidebar') %>
+    <main class="admin-main">
+      <h1>Blog & Announcements</h1>
+      
+      <div class="add-form">
+        <h2>Create New Post</h2>
+        <form method="POST" action="/admin/posts" enctype="multipart/form-data">
+          <input type="text" name="title" placeholder="Post Title" required>
+          <textarea name="content" placeholder="Post Content" rows="6" required></textarea>
+          <input type="file" name="image" accept="image/*">
+          <button type="submit" class="btn-primary">Publish Post</button>
+        </form>
+      </div>
+
+      <div class="posts-list">
+        <h2>Published Posts</h2>
+        <% posts.forEach(post => { %>
+          <div class="post-card">
+            <h3><%= post.title %></h3>
+            <p><%= post.content.substring(0, 150) %>...</p>
+            <small><%= new Date(post.date).toLocaleDateString() %></small>
+          </div>
+        <% }); %>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

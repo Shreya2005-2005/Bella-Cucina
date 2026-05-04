@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+  <div class="admin-container">
+    <%- include('partials/sidebar') %>
+    <main class="admin-main">
+      <h1>Website Settings</h1>
+      <form method="POST" action="/admin/settings" class="settings-form">
+        <h2>General Information</h2>
+        <label>Restaurant Name</label>
+        <input type="text" name="restaurantName" value="<%= settings.restaurantName %>" required>
+        
+        <label>Restaurant Type</label>
+        <input type="text" name="restaurantType" value="<%= settings.restaurantType %>" required>
+        
+        <label>Tagline</label>
+        <input type="text" name="tagline" value="<%= settings.tagline %>" required>
+        
+        <label>About Text</label>
+        <textarea name="about" rows="4" required><%= settings.about %></textarea>
+        
+        <label>Chef Name</label>
+        <input type="text" name="chefName" value="<%= settings.chefName %>" required>
+        
+        <label>Chef Bio</label>
+        <textarea name="chefBio" rows="3" required><%= settings.chefBio %></textarea>
+
+        <h2>Contact Information</h2>
+        <label>Phone</label>
+        <input type="text" name="phone" value="<%= settings.phone %>" required>
+        
+        <label>Email</label>
+        <input type="email" name="email" value="<%= settings.email %>" required>
+        
+        <label>Address</label>
+        <input type="text" name="address" value="<%= settings.address %>" required>
+        
+        <label>Opening Hours</label>
+        <input type="text" name="hours" value="<%= settings.hours %>" required>
+
+        <h2>Design Customization</h2>
+        <label>Primary Color</label>
+        <input type="color" name="colors[primary]" value="<%= settings.colors.primary %>">
+        
+        <label>Secondary Color</label>
+        <input type="color" name="colors[secondary]" value="<%= settings.colors.secondary %>">
+        
+        <label>Accent Color</label>
+        <input type="color" name="colors[accent]" value="<%= settings.colors.accent %>">
+
+        <button type="submit" class="btn-primary">Save Settings</button>
+      </form>
+    </main>
+  </div>
+</body>
+</html>

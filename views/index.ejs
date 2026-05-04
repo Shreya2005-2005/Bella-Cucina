@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= settings.restaurantName %> - <%= settings.restaurantType %></title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=<%= settings.fonts.heading.replace(' ', '+') %>:wght@400;700&family=<%= settings.fonts.body.replace(' ', '+') %>:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo"><%= settings.restaurantName %></div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#reservation" class="btn-primary">Book Table</a></li>
+      </ul>
+      <div class="mobile-menu-toggle">☰</div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="/videos/hero-video.webm" type="video/webm">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1><%= settings.restaurantName %></h1>
+      <p class="tagline"><%= settings.tagline %></p>
+      <a href="#reservation" class="btn-hero">Book a Table</a>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <h2>Our Story</h2>
+          <p><%= settings.about %></p>
+          <div class="chef-intro">
+            <h3><%= settings.chefName %></h3>
+            <p><%= settings.chefBio %></p>
+          </div>
+        </div>
+        <div class="about-image">
+          <img src="/images/restaurant-interior.jpg" alt="Restaurant Interior">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Dishes -->
+  <section class="featured">
+    <div class="container">
+      <h2>Chef's Recommendations</h2>
+      <div class="featured-grid">
+        <% featuredDishes.forEach(dish => { %>
+          <div class="featured-card">
+            <img src="<%= dish.image %>" alt="<%= dish.name %>">
+            <h3><%= dish.name %></h3>
+            <p><%= dish.description %></p>
+            <span class="price">$<%= dish.price %></span>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu" class="menu">
+    <div class="container">
+      <h2>Our Menu</h2>
+      <div class="menu-categories">
+        <% const categories = [...new Set(menu.map(item => item.category))]; %>
+        <% categories.forEach(category => { %>
+          <button class="category-btn" data-category="<%= category %>"><%= category %></button>
+        <% }); %>
+      </div>
+      <div class="menu-grid">
+        <% menu.forEach(item => { %>
+          <div class="menu-item" data-category="<%= item.category %>">
+            <img src="<%= item.image %>" alt="<%= item.name %>">
+            <div class="menu-item-content">
+              <h3><%= item.name %></h3>
+              <p><%= item.description %></p>
+              <span class="price">$<%= item.price %></span>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reservation CTA -->
+  <section id="reservation" class="reservation-cta">
+    <div class="container">
+      <h2>Reserve Your Table</h2>
+      <form id="reservationForm" class="reservation-form">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="tel" name="phone" placeholder="Phone" required>
+        <input type="date" name="date" required>
+        <input type="time" name="time" required>
+        <input type="number" name="guests" placeholder="Number of Guests" min="1" required>
+        <textarea name="message" placeholder="Special Requests (Optional)"></textarea>
+        <button type="submit" class="btn-primary">Book Now</button>
+      </form>
+      <div id="reservationMessage"></div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="testimonials">
+    <div class="container">
+      <h2>What Our Guests Say</h2>
+      <div class="testimonials-grid">
+        <% testimonials.forEach(testimonial => { %>
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"<%= testimonial.text %>"</p>
+            <h4><%= testimonial.name %></h4>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <% faqs.forEach(faq => { %>
+          <div class="faq-item">
+            <h3><%= faq.question %></h3>
+            <p><%= faq.answer %></p>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2>Visit Us</h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="info-item">
+            <h3>Location</h3>
+            <p><%= settings.address %></p>
+          </div>
+          <div class="info-item">
+            <h3>Hours</h3>
+            <p><%= settings.hours %></p>
+          </div>
+          <div class="info-item">
+            <h3>Contact</h3>
+            <p>Phone: <%= settings.phone %></p>
+            <p>Email: <%= settings.email %></p>
+          </div>
+        </div>
+        <form id="contactForm" class="contact-form">
+          <input type="text" name="name" placeholder="Name" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <textarea name="message" placeholder="Your Message" required></textarea>
+          <button type="submit" class="btn-primary">Send Message</button>
+        </form>
+      </div>
+      <div id="contactMessage"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3><%= settings.restaurantName %></h3>
+          <p><%= settings.tagline %></p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#reservation">Reservations</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Follow Us</h4>
+          <div class="social-links">
+            <a href="<%= settings.socialLinks.facebook %>">Facebook</a>
+            <a href="<%= settings.socialLinks.instagram %>">Instagram</a>
+            <a href="<%= settings.socialLinks.twitter %>">Twitter</a>
+          </div>
+        </div>
+      </div>
+      <p class="copyright">&copy; 2024 <%= settings.restaurantName %>. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
