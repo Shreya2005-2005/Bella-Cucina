@@ -118,6 +118,43 @@ restaurant-website/
 
 ## Deployment
 
+### Important: Data Storage Consideration
+
+This application uses JSON files for data storage, which works great for development and traditional hosting but has limitations on serverless platforms like Vercel.
+
+**For Vercel Deployment:**
+- Data is stored in `/tmp` (ephemeral storage)
+- Data will reset between deployments
+- Best for demo/testing purposes
+
+**For Production:**
+- Use Railway.app, Render.com, or traditional VPS (recommended)
+- Or migrate to a database (MongoDB, PostgreSQL)
+- See `DEPLOYMENT.md` for detailed instructions
+
+### Quick Deploy to Vercel
+
+1. Push code to GitHub (already done!)
+2. Go to [vercel.com](https://vercel.com)
+3. Import your GitHub repository
+4. Add environment variables:
+   - `SESSION_SECRET`: your-random-secret
+   - `ADMIN_EMAIL`: admin@restaurant.com
+   - `ADMIN_PASSWORD`: your-password
+5. Deploy!
+
+### Recommended: Deploy to Railway
+
+1. Go to [railway.app](https://railway.app)
+2. Click "New Project" > "Deploy from GitHub"
+3. Select your repository
+4. Add environment variables
+5. Deploy (supports persistent storage!)
+
+See `DEPLOYMENT.md` for complete deployment guide.
+
+## Deployment
+
 ### Deploy to Production
 
 1. **Set up a production server** (VPS, cloud hosting, etc.)

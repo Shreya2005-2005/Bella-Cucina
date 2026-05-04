@@ -23,15 +23,16 @@ app.use(session({
 
 // File upload configuration
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'public/uploads/'),
+  destination: (req, file, cb) => cb(null, uploadsPath),
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
 const upload = multer({ storage });
 
-// Data storage
-const dataPath = './data';
-if (!fs.existsSync(dataPath)) fs.mkdirSync(dataPath);
-if (!fs.existsSync('public/uploads')) fs.mkdirSync('public/uploads', { recursive: true });
+// Data storage - Use /tmp for serverless environments
+const dataPath = process.env.VERCEL ? '/tmp/data' : './data';
+if (!fs.existsSync(dataPath)) fs.mkdirSync(dataPath, { recursive: true });
+const uploadsPath = process.env.VERCEL ? '/tmp/uploads' : 'public/uploads';
+if (!fs.existsSync(uploadsPath)) fs.mkdirSync(uploadsPath, { recursive: true });
 
 // Initialize data files
 const initData = () => {
@@ -210,4 +211,9 @@ app.post('/admin/posts', isAuth, upload.single('image'), (req, res) => {
   res.redirect('/admin/posts');
 });
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// Export for Vercel serverless
+if (process.env.VERCEL) {
+  module.exports = app;
+} else {
+  app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+}
